@@ -21,7 +21,7 @@ class ProfileModel(Base):
     )
 
 class CourseMeetingModel(Base):
-    __tablemame__ = 'course_meetings'
+    __tablename__ = 'course_meetings'
 
     meeting_id = Column(Integer, primary_key=True, autoincrement=True)
     profile_id = Column(Integer, ForeignKey("profiles.profile_id", ondelete="CASCADE"), nullable=False)

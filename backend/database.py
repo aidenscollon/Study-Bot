@@ -26,7 +26,7 @@ class Database():
             connect_args={"check_same_thread" : False}
         )
 
-        self.Session = sessionmaker(
+        self.SessionLocal = sessionmaker(
             autocommit=False,
             autoflush=False,
             bind=self.engine
@@ -38,10 +38,10 @@ class Database():
         Base.metadata.create_all(bind=self.engine)
 
         with self.engine.connect() as conn: 
-            conn.exexcute(text("PRAGMA foreign_keys = ON; "))
+            conn.execute(text("PRAGMA foreign_keys = ON; "))
 
     def get_session(self):
-        return self.Session()
+        return self.SessionLocal()
 
     def insert_profile(self, profile_data: dict):
         with self.get_session() as session: 
@@ -90,7 +90,7 @@ class Database():
         with self.get_session() as session:
             session.query(CourseMeetingModel).delete() 
             session.commit() 
-            session.execute(text("DETELE FROM sqlite_sequence WHERE name='course_meetings';"))
+            session.execute(text("DELETE FROM sqlite_sequence WHERE name='course_meetings';"))
             session.commit() 
 
 db = Database() 
