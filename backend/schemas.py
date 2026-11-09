@@ -40,3 +40,19 @@ class ProfileUpdate(BaseModel):
     preferred_time: Optional[PreferredTimeOfDay] = Field(None, description='Preferred time to study (Morning, Afternoon, Evening, Night)')
     
     model_config = ConfigDict(from_attributes=True, use_enum_values=True)
+
+class CourseMeetingBase(BaseModel):
+    course_code: str = Field(..., description="Course code")
+    course_name: Optional[str] = Field(None, description="Full name of the course")
+    meeting_day: str = Field(..., description="Day of the week (Mon, Tue...)")
+    start_time: str = Field(..., description="Start time (ex: 10:00)")
+    end_time: str = Field(..., description="End time (ex: 13:30)")
+
+class CourseMeetingCreate(CourseMeetingBase):
+    pass
+
+class CourseMeeting(CourseMeetingBase):
+    meeting_id: int = Field(..., description="Unique identifier for the meeting")
+    profile_id: int = Field(..., description="Foreign key linking to the profile")
+
+    model_config = ConfigDict(from_attributes=True, use_enum_values=True)
